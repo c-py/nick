@@ -4,6 +4,14 @@ Globals:
   Function:
     Timeout: 3
 
+Parameters:
+  SlackClientID:
+    Type: String
+  SlackClientSecret:
+    Type: String
+  SlackSigningSecret:
+    Type: String
+
 Resources:
   NickNameFunction:
     Type: AWS::Serverless::Function
@@ -22,6 +30,16 @@ Resources:
           Properties:
             Path: /nickname-again
             Method: post
+        OAuth:
+          Type: Api
+          Properties:
+            Path: /auth
+            Method: get
+      Environment:
+        Variables:
+          SLACK_CLIENT_ID: !Ref SlackClientID
+          SLACK_CLIENT_SECRET: !Ref SlackClientSecret
+          SLACK_SIGNING_SECRET: !Ref SlackSigningSecret
 
 Outputs:
   NickNameApi:
